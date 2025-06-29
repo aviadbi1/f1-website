@@ -1,25 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Users, Trophy } from 'lucide-react';
-import { constructorsData as fallbackConstructors } from '../data/f1Data';
-import { fetchConstructorStandings, ConstructorStanding } from '../api/openf1';
+import { fetchConstructorStandings, ConstructorStanding } from '../api/ergast';
 
 const ConstructorsStandings: React.FC = () => {
-  const [constructors, setConstructors] = useState<ConstructorStanding[]>(
-    fallbackConstructors as unknown as ConstructorStanding[]
-  );
+  const [constructors, setConstructors] = useState<ConstructorStanding[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let data = await fetchConstructorStandings(2025);
-        if (data.length === 0) {
-          data = await fetchConstructorStandings(2024);
-        }
-        if (data.length > 0) {
-          setConstructors(data);
-        }
+        const data = await fetchConstructorStandings(2025);
+        setConstructors(data);
       } catch (err) {
-        console.error('OpenF1 constructor standings fetch failed', err);
+        console.error('Ergast constructor standings fetch failed', err);
       }
     };
     fetchData();

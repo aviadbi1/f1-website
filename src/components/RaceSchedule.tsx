@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin, Clock, Flag } from 'lucide-react';
-import { raceSchedule as fallbackSchedule } from '../data/f1Data';
-import { fetchRaceSchedule, RaceInfo } from '../api/openf1';
+import { fetchRaceSchedule, RaceInfo } from '../api/ergast';
 
 const RaceSchedule: React.FC = () => {
   const [selectedTimezone, setSelectedTimezone] = useState('Asia/Jerusalem');
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [schedule, setSchedule] = useState<RaceInfo[]>(fallbackSchedule);
+  const [schedule, setSchedule] = useState<RaceInfo[]>([]);
 
   const timezones = [
     { value: 'Asia/Jerusalem', label: 'Israel Time (GMT+3)' },
@@ -26,15 +25,10 @@ const RaceSchedule: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let data = await fetchRaceSchedule(2025);
-        if (data.length === 0) {
-          data = await fetchRaceSchedule(2024);
-        }
-        if (data.length > 0) {
-          setSchedule(data);
-        }
+        const data = await fetchRaceSchedule(2025);
+        setSchedule(data);
       } catch (err) {
-        console.error('OpenF1 schedule fetch failed', err);
+        console.error('Ergast schedule fetch failed', err);
       }
     };
     fetchData();
