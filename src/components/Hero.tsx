@@ -106,6 +106,9 @@ const Hero: React.FC = () => {
               </div>
             </div>
           </div>
+          <p className="mt-8 text-sm text-gray-400 text-center">
+            Data powered by <a href="https://openf1.org" className="underline">OpenF1 API</a>
+          </p>
         </div>
       </div>
     </section>

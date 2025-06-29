@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Users, Trophy } from 'lucide-react';
-import { constructorsData } from '../data/f1Data';
+import { constructorsData as fallbackConstructors } from '../data/f1Data';
+import { fetchConstructorStandings, ConstructorStanding } from '../api/openf1';
 
 const ConstructorsStandings: React.FC = () => {
+  const [constructors, setConstructors] = useState<ConstructorStanding[]>(
+    fallbackConstructors as unknown as ConstructorStanding[]
+  );
+
+  useEffect(() => {
+    const year = new Date().getFullYear();
+    fetchConstructorStandings(year)
+      .then((data) => setConstructors(data))
+      .catch((err) => {
+        console.error('OpenF1 constructor standings fetch failed', err);
+      });
+  }, []);
+
   return (
     <section className="py-16 bg-gray-900/50">
       <div className="container mx-auto px-6">
@@ -16,7 +30,7 @@ const ConstructorsStandings: React.FC = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6">
-          {constructorsData.map((constructor, index) => (
+          {constructors.map((constructor, index) => (
             <div
               key={constructor.id}
               className="group bg-black/40 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:scale-[1.02]"
@@ -89,13 +103,13 @@ const ConstructorsStandings: React.FC = () => {
                   <div className="mt-4">
                     <div className="flex justify-between text-xs text-gray-400 mb-1">
                       <span>Championship Progress</span>
-                      <span>{((constructor.points / constructorsData[0].points) * 100).toFixed(1)}%</span>
+                      <span>{((constructor.points / constructors[0].points) * 100).toFixed(1)}%</span>
                     </div>
                     <div className="w-full bg-gray-800 rounded-full h-2">
                       <div
                         className="h-2 rounded-full transition-all duration-1000"
                         style={{
-                          width: `${(constructor.points / constructorsData[0].points) * 100}%`,
+                          width: `${(constructor.points / constructors[0].points) * 100}%`,
                           background: `linear-gradient(90deg, ${constructor.color}, ${constructor.color}80)`
                         }}
                       ></div>

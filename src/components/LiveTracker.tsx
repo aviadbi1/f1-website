@@ -34,6 +34,22 @@ const LiveTracker: React.FC = () => {
   const raceActive = isRaceActive();
   const currentRace = getCurrentRace();
 
+  // Simulated live data for when race is active
+  const [currentLap] = useState(42);
+  const [totalLaps] = useState(71);
+  const [raceTime] = useState('1:23:45');
+
+  const [livePositions] = useState([
+    { position: 1, driver: 'Max Verstappen', team: 'Red Bull', gap: 'Leader', lastLap: '1:20.543', teamColor: '#1E40AF' },
+    { position: 2, driver: 'Charles Leclerc', team: 'Ferrari', gap: '+3.2s', lastLap: '1:20.891', teamColor: '#DC2626' },
+    { position: 3, driver: 'Lando Norris', team: 'McLaren', gap: '+8.7s', lastLap: '1:21.234', teamColor: '#EA580C' },
+    { position: 4, driver: 'George Russell', team: 'Mercedes', gap: '+12.3s', lastLap: '1:21.456', teamColor: '#00D4AA' },
+    { position: 5, driver: 'Carlos Sainz', team: 'Ferrari', gap: '+15.8s', lastLap: '1:21.678', teamColor: '#DC2626' },
+    { position: 6, driver: 'Lewis Hamilton', team: 'Mercedes', gap: '+18.9s', lastLap: '1:21.789', teamColor: '#00D4AA' },
+    { position: 7, driver: 'Oscar Piastri', team: 'McLaren', gap: '+24.1s', lastLap: '1:22.012', teamColor: '#EA580C' },
+    { position: 8, driver: 'Sergio Perez', team: 'Red Bull', gap: '+29.5s', lastLap: '1:22.345', teamColor: '#1E40AF' },
+  ]);
+
   if (!raceActive) {
     return (
       <section className="py-16">
@@ -65,21 +81,6 @@ const LiveTracker: React.FC = () => {
     );
   }
 
-  // Simulated live data for when race is active
-  const [currentLap, setCurrentLap] = useState(42);
-  const [totalLaps] = useState(71);
-  const [raceTime, setRaceTime] = useState('1:23:45');
-
-  const [livePositions] = useState([
-    { position: 1, driver: 'Max Verstappen', team: 'Red Bull', gap: 'Leader', lastLap: '1:20.543', teamColor: '#1E40AF' },
-    { position: 2, driver: 'Charles Leclerc', team: 'Ferrari', gap: '+3.2s', lastLap: '1:20.891', teamColor: '#DC2626' },
-    { position: 3, driver: 'Lando Norris', team: 'McLaren', gap: '+8.7s', lastLap: '1:21.234', teamColor: '#EA580C' },
-    { position: 4, driver: 'George Russell', team: 'Mercedes', gap: '+12.3s', lastLap: '1:21.456', teamColor: '#00D4AA' },
-    { position: 5, driver: 'Carlos Sainz', team: 'Ferrari', gap: '+15.8s', lastLap: '1:21.678', teamColor: '#DC2626' },
-    { position: 6, driver: 'Lewis Hamilton', team: 'Mercedes', gap: '+18.9s', lastLap: '1:21.789', teamColor: '#00D4AA' },
-    { position: 7, driver: 'Oscar Piastri', team: 'McLaren', gap: '+24.1s', lastLap: '1:22.012', teamColor: '#EA580C' },
-    { position: 8, driver: 'Sergio Perez', team: 'Red Bull', gap: '+29.5s', lastLap: '1:22.345', teamColor: '#1E40AF' },
-  ]);
 
   return (
     <section className="py-16">

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin, Clock, Flag } from 'lucide-react';
-import { raceSchedule } from '../data/f1Data';
+import { raceSchedule as fallbackSchedule } from '../data/f1Data';
+import { fetchRaceSchedule, RaceInfo } from '../api/openf1';
 
 const RaceSchedule: React.FC = () => {
   const [selectedTimezone, setSelectedTimezone] = useState('Asia/Jerusalem');
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [schedule, setSchedule] = useState<RaceInfo[]>(fallbackSchedule);
 
   const timezones = [
     { value: 'Asia/Jerusalem', label: 'Israel Time (GMT+3)' },
@@ -19,6 +21,15 @@ const RaceSchedule: React.FC = () => {
       setCurrentTime(new Date());
     }, 1000);
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const year = new Date().getFullYear();
+    fetchRaceSchedule(year)
+      .then((data) => setSchedule(data))
+      .catch((err) => {
+        console.error('OpenF1 schedule fetch failed', err);
+      });
   }, []);
 
   const formatDateTime = (dateString: string, timezone: string) => {
@@ -54,7 +65,7 @@ const RaceSchedule: React.FC = () => {
     return { days, hours, minutes };
   };
 
-  const getRaceStatus = (race: any) => {
+  const getRaceStatus = (race: RaceInfo) => {
     const now = currentTime.getTime();
     const raceTime = new Date(race.date).getTime();
     const qualifyingTime = new Date(race.qualifying).getTime();
@@ -71,7 +82,7 @@ const RaceSchedule: React.FC = () => {
           <div className="flex items-center justify-center space-x-3 mb-4">
             <Calendar className="w-8 h-8 text-cyan-500" />
             <h2 className="text-4xl font-bold bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
-              2024 RACE CALENDAR
+              {new Date().getFullYear()} RACE CALENDAR
             </h2>
           </div>
 
@@ -94,7 +105,7 @@ const RaceSchedule: React.FC = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
-          {raceSchedule.map((race) => {
+          {schedule.map((race) => {
             const raceDateTime = formatDateTime(race.date, selectedTimezone);
             const qualifyingDateTime = formatDateTime(race.qualifying, selectedTimezone);
             const sprintDateTime = race.sprint ? formatDateTime(race.sprint, selectedTimezone) : null;
