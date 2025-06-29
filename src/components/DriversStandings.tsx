@@ -8,12 +8,15 @@ const DriversStandings: React.FC = () => {
   const [drivers, setDrivers] = useState<DriverStanding[]>(fallbackDrivers as unknown as DriverStanding[]);
 
   useEffect(() => {
-    const year = new Date().getFullYear();
-    fetchDriverStandings(year)
-      .then((data) => setDrivers(data))
-      .catch((err) => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchDriverStandings(2025);
+        if (data.length > 0) setDrivers(data);
+      } catch (err) {
         console.error('OpenF1 driver standings fetch failed', err);
-      });
+      }
+    };
+    fetchData();
   }, []);
 
   const sortedDrivers = [...drivers].sort((a, b) => {
