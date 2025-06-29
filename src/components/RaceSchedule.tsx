@@ -24,12 +24,19 @@ const RaceSchedule: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const year = new Date().getFullYear();
-    fetchRaceSchedule(year)
-      .then((data) => setSchedule(data))
-      .catch((err) => {
+    const fetchData = async () => {
+      const currentYear = new Date().getFullYear();
+      try {
+        let data = await fetchRaceSchedule(currentYear);
+        if (data.length === 0) {
+          data = await fetchRaceSchedule(currentYear - 1);
+        }
+        if (data.length > 0) setSchedule(data);
+      } catch (err) {
         console.error('OpenF1 schedule fetch failed', err);
-      });
+      }
+    };
+    fetchData();
   }, []);
 
   const formatDateTime = (dateString: string, timezone: string) => {
