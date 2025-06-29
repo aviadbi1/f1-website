@@ -25,12 +25,8 @@ const RaceSchedule: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const currentYear = new Date().getFullYear();
       try {
-        let data = await fetchRaceSchedule(currentYear);
-        if (data.length === 0) {
-          data = await fetchRaceSchedule(currentYear - 1);
-        }
+        const data = await fetchRaceSchedule(2025);
         if (data.length > 0) setSchedule(data);
       } catch (err) {
         console.error('OpenF1 schedule fetch failed', err);
@@ -89,7 +85,7 @@ const RaceSchedule: React.FC = () => {
           <div className="flex items-center justify-center space-x-3 mb-4">
             <Calendar className="w-8 h-8 text-cyan-500" />
             <h2 className="text-4xl font-bold bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
-              {new Date().getFullYear()} RACE CALENDAR
+              2025 RACE CALENDAR
             </h2>
           </div>
 

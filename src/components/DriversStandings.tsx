@@ -9,12 +9,8 @@ const DriversStandings: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const currentYear = new Date().getFullYear();
       try {
-        let data = await fetchDriverStandings(currentYear);
-        if (data.length === 0) {
-          data = await fetchDriverStandings(currentYear - 1);
-        }
+        const data = await fetchDriverStandings(2025);
         if (data.length > 0) setDrivers(data);
       } catch (err) {
         console.error('OpenF1 driver standings fetch failed', err);
