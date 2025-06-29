@@ -9,12 +9,15 @@ const ConstructorsStandings: React.FC = () => {
   );
 
   useEffect(() => {
-    const year = new Date().getFullYear();
-    fetchConstructorStandings(year)
-      .then((data) => setConstructors(data))
-      .catch((err) => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchConstructorStandings(2025);
+        if (data.length > 0) setConstructors(data);
+      } catch (err) {
         console.error('OpenF1 constructor standings fetch failed', err);
-      });
+      }
+    };
+    fetchData();
   }, []);
 
   return (
