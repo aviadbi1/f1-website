@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Trophy, TrendingUp, TrendingDown, Minus } from 'lucide-react';
-import { driversData } from '../data/f1Data';
+import { driversData as fallbackDrivers } from '../data/f1Data';
+import { fetchDriverStandings, DriverStanding } from '../api/openf1';
 
 const DriversStandings: React.FC = () => {
   const [sortBy, setSortBy] = useState<'points' | 'wins' | 'podiums'>('points');
-  
-  const sortedDrivers = [...driversData].sort((a, b) => {
+  const [drivers, setDrivers] = useState<DriverStanding[]>(fallbackDrivers as unknown as DriverStanding[]);
+
+  useEffect(() => {
+    const year = new Date().getFullYear();
+    fetchDriverStandings(year)
+      .then((data) => setDrivers(data))
+      .catch((err) => {
+        console.error('OpenF1 driver standings fetch failed', err);
+      });
+  }, []);
+
+  const sortedDrivers = [...drivers].sort((a, b) => {
     switch (sortBy) {
       case 'wins':
         return b.wins - a.wins;
@@ -16,7 +27,7 @@ const DriversStandings: React.FC = () => {
     }
   });
 
-  const getPositionChange = (driver: any) => {
+  const getPositionChange = (driver: DriverStanding) => {
     const change = driver.previousPosition - driver.position;
     if (change > 0) return { icon: TrendingUp, color: 'text-green-400', value: `+${change}` };
     if (change < 0) return { icon: TrendingDown, color: 'text-red-400', value: change };
@@ -42,7 +53,7 @@ const DriversStandings: React.FC = () => {
             ].map(({ key, label }) => (
               <button
                 key={key}
-                onClick={() => setSortBy(key as any)}
+                onClick={() => setSortBy(key as 'points' | 'wins' | 'podiums')}
                 className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 ${
                   sortBy === key
                     ? 'bg-red-500/20 border border-red-500/50 text-red-400'
