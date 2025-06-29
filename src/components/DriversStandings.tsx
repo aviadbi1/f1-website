@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Trophy, TrendingUp, TrendingDown, Minus } from 'lucide-react';
-import { driversData as fallbackDrivers } from '../data/f1Data';
-import { fetchDriverStandings, DriverStanding } from '../api/openf1';
+import { fetchDriverStandings, DriverStanding } from '../api/ergast';
 
 const DriversStandings: React.FC = () => {
   const [sortBy, setSortBy] = useState<'points' | 'wins' | 'podiums'>('points');
-  const [drivers, setDrivers] = useState<DriverStanding[]>(fallbackDrivers as unknown as DriverStanding[]);
+  const [drivers, setDrivers] = useState<DriverStanding[]>([]);
 
   useEffect(() => {
-    const year = new Date().getFullYear();
-    fetchDriverStandings(year)
-      .then((data) => setDrivers(data))
-      .catch((err) => {
-        console.error('OpenF1 driver standings fetch failed', err);
-      });
+    const fetchData = async () => {
+      try {
+        const data = await fetchDriverStandings(2025);
+        setDrivers(data);
+      } catch (err) {
+        console.error('Ergast driver standings fetch failed', err);
+      }
+    };
+    fetchData();
   }, []);
 
   const sortedDrivers = [...drivers].sort((a, b) => {

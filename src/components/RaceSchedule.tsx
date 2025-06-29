@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin, Clock, Flag } from 'lucide-react';
-import { raceSchedule as fallbackSchedule } from '../data/f1Data';
-import { fetchRaceSchedule, RaceInfo } from '../api/openf1';
+import { fetchRaceSchedule, RaceInfo } from '../api/ergast';
 
 const RaceSchedule: React.FC = () => {
   const [selectedTimezone, setSelectedTimezone] = useState('Asia/Jerusalem');
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [schedule, setSchedule] = useState<RaceInfo[]>(fallbackSchedule);
+  const [schedule, setSchedule] = useState<RaceInfo[]>([]);
 
   const timezones = [
     { value: 'Asia/Jerusalem', label: 'Israel Time (GMT+3)' },
@@ -24,12 +23,15 @@ const RaceSchedule: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const year = new Date().getFullYear();
-    fetchRaceSchedule(year)
-      .then((data) => setSchedule(data))
-      .catch((err) => {
-        console.error('OpenF1 schedule fetch failed', err);
-      });
+    const fetchData = async () => {
+      try {
+        const data = await fetchRaceSchedule(2025);
+        setSchedule(data);
+      } catch (err) {
+        console.error('Ergast schedule fetch failed', err);
+      }
+    };
+    fetchData();
   }, []);
 
   const formatDateTime = (dateString: string, timezone: string) => {
@@ -82,7 +84,7 @@ const RaceSchedule: React.FC = () => {
           <div className="flex items-center justify-center space-x-3 mb-4">
             <Calendar className="w-8 h-8 text-cyan-500" />
             <h2 className="text-4xl font-bold bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
-              {new Date().getFullYear()} RACE CALENDAR
+              2025 RACE CALENDAR
             </h2>
           </div>
 
