@@ -26,8 +26,13 @@ const RaceSchedule: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchRaceSchedule(2025);
-        if (data.length > 0) setSchedule(data);
+        let data = await fetchRaceSchedule(2025);
+        if (data.length === 0) {
+          data = await fetchRaceSchedule(2024);
+        }
+        if (data.length > 0) {
+          setSchedule(data);
+        }
       } catch (err) {
         console.error('OpenF1 schedule fetch failed', err);
       }

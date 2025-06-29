@@ -97,7 +97,7 @@ interface OpenF1ConstructorStanding {
 export async function fetchDriverStandings(
   year: number
 ): Promise<DriverStanding[]> {
-  const url = `${OPENF1_BASE_URL}/driver_standings?year=${year}`;
+  const url = `${OPENF1_BASE_URL}/rankings?year=${year}&category=driver`;
   const res = await fetch(url);
   if (!res.ok) {
     throw new Error('Failed to fetch OpenF1 driver standings');
@@ -119,7 +119,7 @@ export async function fetchDriverStandings(
 export async function fetchConstructorStandings(
   year: number
 ): Promise<ConstructorStanding[]> {
-  const url = `${OPENF1_BASE_URL}/constructor_standings?year=${year}`;
+  const url = `${OPENF1_BASE_URL}/rankings?year=${year}&category=team`;
   const res = await fetch(url);
   if (!res.ok) {
     throw new Error('Failed to fetch OpenF1 constructor standings');
