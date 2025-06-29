@@ -15,6 +15,7 @@ export interface DriverStanding {
   id: number;
   name: string;
   team: string;
+  teamLogo?: string;
   points: number;
   wins: number;
   podiums: number;
@@ -51,6 +52,8 @@ const COUNTRY_CODE_MAP: Record<string, string> = {
   Austria: 'AT',
   France: 'FR',
   Britain: 'GB',
+  'United Kingdom': 'GB',
+  'Great Britain': 'GB',
   Hungary: 'HU',
   Belgium: 'BE',
   Netherlands: 'NL',
@@ -59,7 +62,9 @@ const COUNTRY_CODE_MAP: Record<string, string> = {
   Mexico: 'MX',
   Brazil: 'BR',
   'United States': 'US',
-  'United Arab Emirates': 'AE'
+  'United Arab Emirates': 'AE',
+  UAE: 'AE',
+  Azerbaijan: 'AZ'
 };
 
 const TEAM_COLOR_MAP: Record<string, string> = {
@@ -69,7 +74,55 @@ const TEAM_COLOR_MAP: Record<string, string> = {
   McLaren: '#EA580C',
   Mercedes: '#00D4AA',
   'Aston Martin': '#00594F',
-  Alpine: '#0066CC'
+  Alpine: '#0066CC',
+  Williams: '#0066B3',
+  'Williams Racing': '#0066B3',
+  Haas: '#B6BABD',
+  'Haas F1 Team': '#B6BABD',
+  'MoneyGram Haas F1 Team': '#B6BABD',
+  'RB F1 Team': '#6692FF',
+  'Visa Cash App RB': '#6692FF',
+  'Scuderia AlphaTauri': '#6692FF',
+  Sauber: '#52E252',
+  'Kick Sauber': '#52E252',
+  'Stake F1 Team Kick Sauber': '#52E252'
+};
+
+const TEAM_LOGO_MAP: Record<string, string> = {
+  'Red Bull Racing':
+    'https://upload.wikimedia.org/wikipedia/en/thumb/6/6f/Red_Bull_Racing_logo.svg/200px-Red_Bull_Racing_logo.svg.png',
+  Ferrari:
+    'https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Scuderia_Ferrari_Logo.svg/200px-Scuderia_Ferrari_Logo.svg.png',
+  McLaren:
+    'https://upload.wikimedia.org/wikipedia/en/thumb/5/57/McLaren_F1_Logo.svg/200px-McLaren_F1_Logo.svg.png',
+  Mercedes:
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Mercedes-Benz_in_Motorsport_logo.svg/200px-Mercedes-Benz_in_Motorsport_logo.svg.png',
+  'Aston Martin':
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Aston_Martin_F1_logo.svg/200px-Aston_Martin_F1_logo.svg.png',
+  Alpine:
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Alpine_F1_Team_logo.svg/200px-Alpine_F1_Team_logo.svg.png',
+  Williams:
+    'https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Williams_Racing_logo_2020.svg/200px-Williams_Racing_logo_2020.svg.png',
+  'Williams Racing':
+    'https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Williams_Racing_logo_2020.svg/200px-Williams_Racing_logo_2020.svg.png',
+  Haas:
+    'https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/Haas_F1_Team_logo.svg/200px-Haas_F1_Team_logo.svg.png',
+  'Haas F1 Team':
+    'https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/Haas_F1_Team_logo.svg/200px-Haas_F1_Team_logo.svg.png',
+  'MoneyGram Haas F1 Team':
+    'https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/Haas_F1_Team_logo.svg/200px-Haas_F1_Team_logo.svg.png',
+  'RB F1 Team':
+    'https://upload.wikimedia.org/wikipedia/en/thumb/0/04/RB_F1_Team_logo.svg/200px-RB_F1_Team_logo.svg.png',
+  'Visa Cash App RB':
+    'https://upload.wikimedia.org/wikipedia/en/thumb/0/04/RB_F1_Team_logo.svg/200px-RB_F1_Team_logo.svg.png',
+  'Scuderia AlphaTauri':
+    'https://upload.wikimedia.org/wikipedia/en/thumb/0/04/RB_F1_Team_logo.svg/200px-RB_F1_Team_logo.svg.png',
+  Sauber:
+    'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Stake_F1_Team_Kick_Sauber_logo.svg/200px-Stake_F1_Team_Kick_Sauber_logo.svg.png',
+  'Kick Sauber':
+    'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Stake_F1_Team_Kick_Sauber_logo.svg/200px-Stake_F1_Team_Kick_Sauber_logo.svg.png',
+  'Stake F1 Team Kick Sauber':
+    'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Stake_F1_Team_Kick_Sauber_logo.svg/200px-Stake_F1_Team_Kick_Sauber_logo.svg.png'
 };
 
 interface ErgastRace {
@@ -141,6 +194,7 @@ export async function fetchDriverStandings(year: number): Promise<DriverStanding
       id: idx + 1,
       name: `${d.Driver.givenName} ${d.Driver.familyName}`,
       team: teamName,
+      teamLogo: TEAM_LOGO_MAP[teamName],
       points: Number(d.points),
       wins: Number(d.wins),
       podiums: Number(d.podiums ?? 0),
@@ -170,6 +224,7 @@ export async function fetchConstructorStandings(year: number): Promise<Construct
       position: Number(c.position),
       previousPosition: Number(c.position),
       color: TEAM_COLOR_MAP[name] || '#666',
+      logo: TEAM_LOGO_MAP[name],
       drivers: []
     };
   });

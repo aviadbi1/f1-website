@@ -99,9 +99,17 @@ const DriversStandings: React.FC = () => {
                     </div>
                     
                     <div className="w-16 h-16 rounded-lg overflow-hidden border-2 border-gray-600 bg-gray-800 flex items-center justify-center">
-                      <div className="text-2xl font-bold text-gray-400">
-                        {driver.name.split(' ').map(n => n[0]).join('')}
-                      </div>
+                      {driver.teamLogo ? (
+                        <img
+                          src={driver.teamLogo}
+                          alt={driver.team}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <div className="text-2xl font-bold text-gray-400">
+                          {driver.name.split(' ').map((n) => n[0]).join('')}
+                        </div>
+                      )}
                     </div>
                   </div>
 

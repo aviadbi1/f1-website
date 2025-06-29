@@ -88,12 +88,17 @@ const ConstructorsStandings: React.FC = () => {
                     <h4 className="text-sm font-semibold text-gray-300">Drivers</h4>
                     <div className="flex space-x-2">
                       {constructor.drivers.map((driver, driverIndex) => (
-                        <div key={driverIndex} className="flex items-center space-x-2 bg-gray-800/50 rounded-lg px-3 py-1">
-                          <div className="w-6 h-6 rounded-full overflow-hidden border border-gray-600 bg-gray-700 flex items-center justify-center">
-                            <div className="text-xs font-bold text-gray-300">
-                              {driver.name.split(' ').map(n => n[0]).join('')}
-                            </div>
-                          </div>
+                        <div
+                          key={driverIndex}
+                          className="flex items-center space-x-2 bg-gray-800/50 rounded-lg px-3 py-1"
+                        >
+                          {constructor.logo && (
+                            <img
+                              src={constructor.logo}
+                              alt={constructor.name}
+                              className="w-6 h-6 rounded-full border border-gray-600 object-contain"
+                            />
+                          )}
                           <span className="text-sm font-medium text-white">{driver.name}</span>
                         </div>
                       ))}
