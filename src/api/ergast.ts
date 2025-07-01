@@ -16,6 +16,7 @@ export interface DriverStanding {
   name: string;
   team: string;
   teamLogo?: string;
+  photo?: string;
   points: number;
   wins: number;
   podiums: number;
@@ -160,6 +161,29 @@ const TEAM_LOGO_MAP: Record<string, string> = {
     'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Stake_F1_Team_Kick_Sauber_logo.svg/200px-Stake_F1_Team_Kick_Sauber_logo.svg.png'
 };
 
+const DRIVER_PHOTO_MAP: Record<string, string> = {
+  'Max Verstappen':
+    'https://images.pexels.com/photos/15914435/pexels-photo-15914435.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Charles Leclerc':
+    'https://images.pexels.com/photos/15914439/pexels-photo-15914439.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Lando Norris':
+    'https://images.pexels.com/photos/17081144/pexels-photo-17081144.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Carlos Sainz':
+    'https://images.pexels.com/photos/17081143/pexels-photo-17081143.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Oscar Piastri':
+    'https://images.pexels.com/photos/17081142/pexels-photo-17081142.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'George Russell':
+    'https://images.pexels.com/photos/17081141/pexels-photo-17081141.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Lewis Hamilton':
+    'https://images.pexels.com/photos/17081140/pexels-photo-17081140.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Sergio Perez':
+    'https://images.pexels.com/photos/17081139/pexels-photo-17081139.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Fernando Alonso':
+    'https://images.pexels.com/photos/17081138/pexels-photo-17081138.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Lance Stroll':
+    'https://images.pexels.com/photos/17081137/pexels-photo-17081137.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1'
+};
+
 interface ErgastRace {
   raceName: string;
   date: string;
@@ -225,11 +249,13 @@ export async function fetchDriverStandings(year: number): Promise<DriverStanding
   const standings: ErgastDriverStanding[] = json?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings || [];
   return standings.map((d, idx) => {
     const teamName = d.Constructors?.[0]?.name || '';
+    const fullName = `${d.Driver.givenName} ${d.Driver.familyName}`;
     return {
       id: idx + 1,
-      name: `${d.Driver.givenName} ${d.Driver.familyName}`,
+      name: fullName,
       team: teamName,
       teamLogo: TEAM_LOGO_MAP[teamName],
+      photo: DRIVER_PHOTO_MAP[fullName],
       points: Number(d.points),
       wins: Number(d.wins),
       podiums: Number(d.podiums ?? 0),

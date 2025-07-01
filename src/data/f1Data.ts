@@ -1,8 +1,9 @@
 export const driversData = [
-  {
+  { 
     id: 1,
     name: 'Max Verstappen',
     team: 'Red Bull Racing',
+    photo: 'https://images.pexels.com/photos/15914435/pexels-photo-15914435.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
     teamColor: '#1E40AF',
     points: 63,
     wins: 2,
@@ -10,10 +11,11 @@ export const driversData = [
     position: 1,
     previousPosition: 1
   },
-  {
+  { 
     id: 2,
     name: 'Charles Leclerc',
     team: 'Ferrari',
+    photo: 'https://images.pexels.com/photos/15914439/pexels-photo-15914439.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
     teamColor: '#DC2626',
     points: 44,
     wins: 1,
@@ -21,10 +23,11 @@ export const driversData = [
     position: 2,
     previousPosition: 3
   },
-  {
+  { 
     id: 3,
     name: 'Lando Norris',
     team: 'McLaren',
+    photo: 'https://images.pexels.com/photos/17081144/pexels-photo-17081144.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
     teamColor: '#EA580C',
     points: 41,
     wins: 0,
@@ -32,10 +35,11 @@ export const driversData = [
     position: 3,
     previousPosition: 2
   },
-  {
+  { 
     id: 4,
     name: 'Carlos Sainz',
     team: 'Ferrari',
+    photo: 'https://images.pexels.com/photos/17081143/pexels-photo-17081143.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
     teamColor: '#DC2626',
     points: 32,
     wins: 0,
@@ -43,10 +47,11 @@ export const driversData = [
     position: 4,
     previousPosition: 4
   },
-  {
+  { 
     id: 5,
     name: 'Oscar Piastri',
     team: 'McLaren',
+    photo: 'https://images.pexels.com/photos/17081142/pexels-photo-17081142.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
     teamColor: '#EA580C',
     points: 28,
     wins: 0,
@@ -54,10 +59,11 @@ export const driversData = [
     position: 5,
     previousPosition: 6
   },
-  {
+  { 
     id: 6,
     name: 'George Russell',
     team: 'Mercedes',
+    photo: 'https://images.pexels.com/photos/17081141/pexels-photo-17081141.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
     teamColor: '#00D4AA',
     points: 22,
     wins: 0,
@@ -65,10 +71,11 @@ export const driversData = [
     position: 6,
     previousPosition: 5
   },
-  {
+  { 
     id: 7,
     name: 'Lewis Hamilton',
     team: 'Mercedes',
+    photo: 'https://images.pexels.com/photos/17081140/pexels-photo-17081140.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
     teamColor: '#00D4AA',
     points: 18,
     wins: 0,
@@ -76,10 +83,11 @@ export const driversData = [
     position: 7,
     previousPosition: 7
   },
-  {
+  { 
     id: 8,
     name: 'Sergio Perez',
     team: 'Red Bull Racing',
+    photo: 'https://images.pexels.com/photos/17081139/pexels-photo-17081139.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
     teamColor: '#1E40AF',
     points: 15,
     wins: 0,
@@ -87,10 +95,11 @@ export const driversData = [
     position: 8,
     previousPosition: 9
   },
-  {
+  { 
     id: 9,
     name: 'Fernando Alonso',
     team: 'Aston Martin',
+    photo: 'https://images.pexels.com/photos/17081138/pexels-photo-17081138.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
     teamColor: '#00594F',
     points: 12,
     wins: 0,
@@ -98,10 +107,11 @@ export const driversData = [
     position: 9,
     previousPosition: 8
   },
-  {
+  { 
     id: 10,
     name: 'Lance Stroll',
     team: 'Aston Martin',
+    photo: 'https://images.pexels.com/photos/17081137/pexels-photo-17081137.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
     teamColor: '#00594F',
     points: 8,
     wins: 0,

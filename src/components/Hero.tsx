@@ -21,6 +21,11 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 via-transparent to-blue-500/20"></div>
           <div className="racing-lines"></div>
+          <img
+            src="https://images.pexels.com/photos/11676315/pexels-photo-11676315.jpeg?auto=compress&cs=tinysrgb&w=600"
+            alt="F1 car"
+            className="f1-car"
+          />
         </div>
         
         <div className="container mx-auto px-6 relative z-10">
@@ -62,6 +67,11 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 via-transparent to-blue-500/20"></div>
         <div className="racing-lines"></div>
+        <img
+          src="https://images.pexels.com/photos/11676315/pexels-photo-11676315.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt="F1 car"
+          className="f1-car"
+        />
       </div>
       
       <div className="container mx-auto px-6 relative z-10">

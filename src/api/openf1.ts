@@ -1,5 +1,28 @@
 export const OPENF1_BASE_URL = 'https://api.openf1.org/v1';
 
+const DRIVER_PHOTO_MAP: Record<string, string> = {
+  'Max Verstappen':
+    'https://images.pexels.com/photos/15914435/pexels-photo-15914435.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Charles Leclerc':
+    'https://images.pexels.com/photos/15914439/pexels-photo-15914439.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Lando Norris':
+    'https://images.pexels.com/photos/17081144/pexels-photo-17081144.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Carlos Sainz':
+    'https://images.pexels.com/photos/17081143/pexels-photo-17081143.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Oscar Piastri':
+    'https://images.pexels.com/photos/17081142/pexels-photo-17081142.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'George Russell':
+    'https://images.pexels.com/photos/17081141/pexels-photo-17081141.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Lewis Hamilton':
+    'https://images.pexels.com/photos/17081140/pexels-photo-17081140.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Sergio Perez':
+    'https://images.pexels.com/photos/17081139/pexels-photo-17081139.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Fernando Alonso':
+    'https://images.pexels.com/photos/17081138/pexels-photo-17081138.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1',
+  'Lance Stroll':
+    'https://images.pexels.com/photos/17081137/pexels-photo-17081137.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1'
+};
+
 export interface OpenF1Session {
   session_key?: number;
   event_name?: string;
@@ -48,6 +71,7 @@ export interface DriverStanding {
   id: number;
   name: string;
   team: string;
+  photo?: string;
   points: number;
   wins: number;
   podiums: number;
@@ -107,6 +131,7 @@ export async function fetchDriverStandings(
     id: idx + 1,
     name: d.driver_name,
     team: d.team_name,
+    photo: DRIVER_PHOTO_MAP[d.driver_name],
     points: Number(d.points),
     wins: Number(d.wins ?? 0),
     podiums: Number(d.podiums ?? 0),
