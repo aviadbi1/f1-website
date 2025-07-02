@@ -16,6 +16,7 @@ export interface DriverStanding {
   name: string;
   team: string;
   teamLogo?: string;
+  thumbnail?: string;
   points: number;
   wins: number;
   podiums: number;
@@ -101,63 +102,108 @@ const TEAM_COLOR_MAP: Record<string, string> = {
 
 const TEAM_LOGO_MAP: Record<string, string> = {
   'Red Bull Racing':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/6/6f/Red_Bull_Racing_logo.svg/200px-Red_Bull_Racing_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/red-bull-racing.png',
   'Oracle Red Bull Racing':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/6/6f/Red_Bull_Racing_logo.svg/200px-Red_Bull_Racing_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/red-bull-racing.png',
   'Red Bull Racing Honda RBPT':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/6/6f/Red_Bull_Racing_logo.svg/200px-Red_Bull_Racing_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/red-bull-racing.png',
   'Red Bull':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/6/6f/Red_Bull_Racing_logo.svg/200px-Red_Bull_Racing_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/red-bull-racing.png',
   Ferrari:
-    'https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Scuderia_Ferrari_Logo.svg/200px-Scuderia_Ferrari_Logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/ferrari.png',
   'Scuderia Ferrari':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Scuderia_Ferrari_Logo.svg/200px-Scuderia_Ferrari_Logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/ferrari.png',
   McLaren:
-    'https://upload.wikimedia.org/wikipedia/en/thumb/5/57/McLaren_F1_Logo.svg/200px-McLaren_F1_Logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/mclaren.png',
   'McLaren F1 Team':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/5/57/McLaren_F1_Logo.svg/200px-McLaren_F1_Logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/mclaren.png',
   Mercedes:
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Mercedes-Benz_in_Motorsport_logo.svg/200px-Mercedes-Benz_in_Motorsport_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/mercedes.png',
   'Mercedes AMG Petronas F1 Team':
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Mercedes-Benz_in_Motorsport_logo.svg/200px-Mercedes-Benz_in_Motorsport_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/mercedes.png',
   'Aston Martin':
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Aston_Martin_F1_logo.svg/200px-Aston_Martin_F1_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/aston-martin.png',
   'Aston Martin Aramco F1 Team':
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Aston_Martin_F1_logo.svg/200px-Aston_Martin_F1_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/aston-martin.png',
   'Aston Martin Cognizant F1 Team':
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Aston_Martin_F1_logo.svg/200px-Aston_Martin_F1_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/aston-martin.png',
   Alpine:
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Alpine_F1_Team_logo.svg/200px-Alpine_F1_Team_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/alpine.png',
   'Alpine F1 Team':
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Alpine_F1_Team_logo.svg/200px-Alpine_F1_Team_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/alpine.png',
   'BWT Alpine F1 Team':
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Alpine_F1_Team_logo.svg/200px-Alpine_F1_Team_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/alpine.png',
   Williams:
-    'https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Williams_Racing_logo_2020.svg/200px-Williams_Racing_logo_2020.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/williams.png',
   'Williams Racing':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Williams_Racing_logo_2020.svg/200px-Williams_Racing_logo_2020.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/williams.png',
   Haas:
-    'https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/Haas_F1_Team_logo.svg/200px-Haas_F1_Team_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/haas.png',
   'Haas F1 Team':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/Haas_F1_Team_logo.svg/200px-Haas_F1_Team_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/haas.png',
   'MoneyGram Haas F1 Team':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/Haas_F1_Team_logo.svg/200px-Haas_F1_Team_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/haas.png',
   'RB F1 Team':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/0/04/RB_F1_Team_logo.svg/200px-RB_F1_Team_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/racing-bulls.png',
   'Visa Cash App RB':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/0/04/RB_F1_Team_logo.svg/200px-RB_F1_Team_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/racing-bulls.png',
   'Racing Bulls':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/0/04/RB_F1_Team_logo.svg/200px-RB_F1_Team_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/racing-bulls.png',
   'Scuderia AlphaTauri':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/0/04/RB_F1_Team_logo.svg/200px-RB_F1_Team_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/racing-bulls.png',
   Sauber:
-    'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Stake_F1_Team_Kick_Sauber_logo.svg/200px-Stake_F1_Team_Kick_Sauber_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/kick-sauber.png',
   'Kick Sauber':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Stake_F1_Team_Kick_Sauber_logo.svg/200px-Stake_F1_Team_Kick_Sauber_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/kick-sauber.png',
   'Stake F1 Team Kick Sauber':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Stake_F1_Team_Kick_Sauber_logo.svg/200px-Stake_F1_Team_Kick_Sauber_logo.svg.png',
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/kick-sauber.png',
   'Alfa Romeo':
-    'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Stake_F1_Team_Kick_Sauber_logo.svg/200px-Stake_F1_Team_Kick_Sauber_logo.svg.png'
+    'https://media.formula1.com/content/dam/fom-website/teams/2025/kick-sauber.png'
+};
+
+const DRIVER_THUMBNAIL_MAP: Record<string, string> = {
+  'Max Verstappen':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/verstappen.png',
+  'Yuki Tsunoda':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/tsunoda.png',
+  'Charles Leclerc':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/leclerc.png',
+  'Lewis Hamilton':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/hamilton.png',
+  'George Russell':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/russell.png',
+  'Andrea Antonelli':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/antonelli.png',
+  'Andrea Kimi Antonelli':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/antonelli.png',
+  'Lando Norris':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/norris.png',
+  'Oscar Piastri':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/piastri.png',
+  'Fernando Alonso':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/alonso.png',
+  'Lance Stroll':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/stroll.png',
+  'Pierre Gasly':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/gasly.png',
+  'Esteban Ocon':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/ocon.png',
+  'Oliver Bearman':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/bearman.png',
+  'Gabriel Bortoleto':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/bortoleto.png',
+  'Nico Hulkenberg':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/hulkenberg.png',
+  'Nico Hülkenberg':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/hulkenberg.png',
+  'Isack Hadjar':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/hadjar.png',
+  'Liam Lawson':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/lawson.png',
+  'Alex Albon':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/albon.png',
+  'Carlos Sainz':
+    'https://www.formula1.com/content/dam/fom-website/drivers/2025Drivers/sainz.png'
 };
 
 interface ErgastRace {
@@ -225,11 +271,17 @@ export async function fetchDriverStandings(year: number): Promise<DriverStanding
   const standings: ErgastDriverStanding[] = json?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings || [];
   return standings.map((d, idx) => {
     const teamName = d.Constructors?.[0]?.name || '';
+    const fullName = `${d.Driver.givenName} ${d.Driver.familyName}`;
     return {
       id: idx + 1,
-      name: `${d.Driver.givenName} ${d.Driver.familyName}`,
+      name: fullName,
       team: teamName,
       teamLogo: TEAM_LOGO_MAP[teamName],
+      thumbnail:
+        DRIVER_THUMBNAIL_MAP[fullName] ||
+        DRIVER_THUMBNAIL_MAP[fullName
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')],
       points: Number(d.points),
       wins: Number(d.wins),
       podiums: Number(d.podiums ?? 0),

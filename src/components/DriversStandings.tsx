@@ -99,7 +99,13 @@ const DriversStandings: React.FC = () => {
                     </div>
                     
                     <div className="w-16 h-16 rounded-lg overflow-hidden border-2 border-gray-600 bg-gray-800 flex items-center justify-center">
-                      {driver.teamLogo ? (
+                      {driver.thumbnail ? (
+                        <img
+                          src={driver.thumbnail}
+                          alt={driver.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : driver.teamLogo ? (
                         <img
                           src={driver.teamLogo}
                           alt={driver.team}
