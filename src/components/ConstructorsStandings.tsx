@@ -18,12 +18,12 @@ const ConstructorsStandings: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-16 bg-gray-900/50">
+    <section className="py-16 bg-gray-100">
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center space-x-3 mb-4">
-            <Users className="w-8 h-8 text-blue-500" />
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
+            <Users className="w-8 h-8 text-[#116dff]" />
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-[#116dff] to-[#008250] bg-clip-text text-transparent">
               CONSTRUCTORS CHAMPIONSHIP
             </h2>
           </div>
@@ -33,7 +33,7 @@ const ConstructorsStandings: React.FC = () => {
           {constructors.map((constructor, index) => (
             <div
               key={constructor.id}
-              className="group bg-black/40 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:scale-[1.02]"
+              className="group bg-white/80 backdrop-blur-lg rounded-xl p-6 border border-gray-300 hover:border-[#008250]/50 transition-all duration-300 hover:transform hover:scale-[1.02] hover:shadow-lg"
             >
               <div className="flex items-center space-x-6">
                 <div className="relative">
@@ -42,7 +42,7 @@ const ConstructorsStandings: React.FC = () => {
                       index === 0 ? 'bg-yellow-500 text-black' :
                       index === 1 ? 'bg-gray-300 text-black' :
                       index === 2 ? 'bg-orange-600 text-white' :
-                      'bg-gray-700 text-white'
+                      'bg-gray-300 text-gray-800'
                     }`}
                   >
                     {index + 1}
@@ -64,7 +64,7 @@ const ConstructorsStandings: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-white">{constructor.name}</h3>
+                      <h3 className="text-xl font-bold text-gray-900">{constructor.name}</h3>
                       <p className="text-sm text-gray-400">{constructor.country}</p>
                     </div>
                   </div>
@@ -72,7 +72,7 @@ const ConstructorsStandings: React.FC = () => {
                   <div className="grid grid-cols-3 gap-4 mb-4">
                     <div>
                       <span className="text-gray-400 text-sm">Points</span>
-                      <div className="text-2xl font-bold text-white">{constructor.points}</div>
+                      <div className="text-2xl font-bold text-gray-900">{constructor.points}</div>
                     </div>
                     <div>
                       <span className="text-gray-400 text-sm">Wins</span>
@@ -90,7 +90,7 @@ const ConstructorsStandings: React.FC = () => {
                       {constructor.drivers.map((driver, driverIndex) => (
                         <div
                           key={driverIndex}
-                          className="flex items-center space-x-2 bg-gray-800/50 rounded-lg px-3 py-1"
+                          className="flex items-center space-x-2 bg-gray-200 rounded-lg px-3 py-1"
                         >
                           {constructor.logo && (
                             <img
@@ -99,7 +99,7 @@ const ConstructorsStandings: React.FC = () => {
                               className="w-6 h-6 rounded-full border border-gray-600 object-contain"
                             />
                           )}
-                          <span className="text-sm font-medium text-white">{driver.name}</span>
+                          <span className="text-sm font-medium text-gray-800">{driver.name}</span>
                         </div>
                       ))}
                     </div>
@@ -110,7 +110,7 @@ const ConstructorsStandings: React.FC = () => {
                       <span>Championship Progress</span>
                       <span>{((constructor.points / constructors[0].points) * 100).toFixed(1)}%</span>
                     </div>
-                    <div className="w-full bg-gray-800 rounded-full h-2">
+                    <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className="h-2 rounded-full transition-all duration-1000"
                         style={{

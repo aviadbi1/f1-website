@@ -42,7 +42,7 @@ const DriversStandings: React.FC = () => {
         <div className="text-center mb-12">
           <div className="flex items-center justify-center space-x-3 mb-4">
             <Trophy className="w-8 h-8 text-yellow-500" />
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-yellow-500 to-red-500 bg-clip-text text-transparent">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-yellow-500 to-[#008250] bg-clip-text text-transparent">
               DRIVERS CHAMPIONSHIP
             </h2>
           </div>
@@ -58,8 +58,8 @@ const DriversStandings: React.FC = () => {
                 onClick={() => setSortBy(key as 'points' | 'wins' | 'podiums')}
                 className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 ${
                   sortBy === key
-                    ? 'bg-red-500/20 border border-red-500/50 text-red-400'
-                    : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
+                    ? 'bg-[#008250]/20 border border-[#008250]/50 text-[#008250]'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }`}
               >
                 {label}
@@ -76,7 +76,7 @@ const DriversStandings: React.FC = () => {
             return (
               <div
                 key={driver.id}
-                className="group bg-black/40 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50 hover:border-red-500/50 transition-all duration-300 hover:transform hover:scale-[1.02] hover:shadow-2xl"
+                className="group bg-white/80 backdrop-blur-lg rounded-xl p-6 border border-gray-300 hover:border-[#008250]/50 transition-all duration-300 hover:transform hover:scale-[1.02] hover:shadow-lg"
               >
                 <div className="flex items-center space-x-6">
                   <div className="flex items-center space-x-4">
@@ -86,7 +86,7 @@ const DriversStandings: React.FC = () => {
                           index === 0 ? 'bg-yellow-500 text-black' :
                           index === 1 ? 'bg-gray-300 text-black' :
                           index === 2 ? 'bg-orange-600 text-white' :
-                          'bg-gray-700 text-white'
+                          'bg-gray-300 text-gray-800'
                         }`}
                       >
                         {index + 1}
@@ -122,7 +122,7 @@ const DriversStandings: React.FC = () => {
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-2">
                       <div>
-                        <h3 className="text-xl font-bold text-white">{driver.name}</h3>
+                        <h3 className="text-xl font-bold text-gray-900">{driver.name}</h3>
                         <p className="text-sm" style={{ color: driver.teamColor }}>
                           {driver.team}
                         </p>
@@ -137,7 +137,7 @@ const DriversStandings: React.FC = () => {
                     <div className="grid grid-cols-4 gap-4 text-sm">
                       <div>
                         <span className="text-gray-400">Points</span>
-                        <div className="text-2xl font-bold text-white">{driver.points}</div>
+                        <div className="text-2xl font-bold text-gray-900">{driver.points}</div>
                       </div>
                       <div>
                         <span className="text-gray-400">Wins</span>

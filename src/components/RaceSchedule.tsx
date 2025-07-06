@@ -78,24 +78,24 @@ const RaceSchedule: React.FC = () => {
   };
 
   return (
-    <section className="py-16">
+    <section className="py-16 bg-[#F8EEE1]">
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center space-x-3 mb-4">
-            <Calendar className="w-8 h-8 text-cyan-500" />
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
+            <Calendar className="w-8 h-8 text-[#008250]" />
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-[#008250] to-[#116dff] bg-clip-text text-transparent">
               2025 RACE CALENDAR
             </h2>
           </div>
 
           <div className="mt-8">
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Select Timezone
             </label>
             <select
               value={selectedTimezone}
               onChange={(e) => setSelectedTimezone(e.target.value)}
-              className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+              className="bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 text-gray-900 focus:ring-2 focus:ring-[#008250] focus:border-transparent"
             >
               {timezones.map((tz) => (
                 <option key={tz.value} value={tz.value}>
@@ -117,12 +117,12 @@ const RaceSchedule: React.FC = () => {
             return (
               <div
                 key={race.id}
-                className={`group bg-black/40 backdrop-blur-lg rounded-xl p-6 border transition-all duration-300 hover:transform hover:scale-[1.02] ${
-                  status === 'completed' 
-                    ? 'border-gray-600/50 opacity-75' 
+                className={`group bg-white/80 backdrop-blur-lg rounded-xl p-6 border transition-all duration-300 hover:transform hover:scale-[1.02] ${
+                  status === 'completed'
+                    ? 'border-gray-400/50 opacity-75'
                     : status === 'qualifying-done'
                     ? 'border-yellow-500/50 hover:border-yellow-400/70'
-                    : 'border-gray-700/50 hover:border-cyan-500/50'
+                    : 'border-gray-300 hover:border-[#008250]/50'
                 }`}
               >
                 <div className="relative mb-4">
@@ -146,7 +146,7 @@ const RaceSchedule: React.FC = () => {
                 </div>
 
                 <div className="mb-4">
-                  <h3 className="text-xl font-bold text-white mb-1">{race.name}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">{race.name}</h3>
                   <div className="flex items-center space-x-2 text-gray-300">
                     <MapPin className="w-4 h-4" />
                     <span>{race.location}, {race.country}</span>
@@ -167,13 +167,13 @@ const RaceSchedule: React.FC = () => {
                 )}
 
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-2 bg-gray-800/50 rounded-lg">
+                  <div className="flex items-center justify-between p-2 bg-gray-200 rounded-lg">
                     <div className="flex items-center space-x-2">
                       <Flag className="w-4 h-4 text-gray-400" />
                       <span className="text-sm font-medium text-gray-300">Qualifying</span>
                     </div>
                     <div className="text-right text-sm">
-                      <div className="text-white font-medium">{qualifyingDateTime.time}</div>
+                      <div className="text-gray-900 font-medium">{qualifyingDateTime.time}</div>
                       <div className="text-gray-400">{qualifyingDateTime.date}</div>
                     </div>
                   </div>

@@ -89,23 +89,23 @@ const LiveTracker: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-3 mb-4">
-            <Radio className="w-8 h-8 text-red-500 animate-pulse" />
-            <h2 className="text-3xl font-bold text-red-400">LIVE GRID - {currentRace?.name}</h2>
+          <Radio className="w-8 h-8 text-[#008250] animate-pulse" />
+          <h2 className="text-3xl font-bold text-[#008250]">LIVE GRID - {currentRace?.name}</h2>
           </div>
         </div>
         <div className="max-w-3xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {grid.map((entry) => (
             <div
               key={entry.position}
-              className="bg-black/40 backdrop-blur-lg rounded-lg p-3 border border-gray-700/50"
+              className="bg-white/80 backdrop-blur-lg rounded-lg p-3 border border-gray-300"
             >
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-700 text-white text-sm font-bold">
+                <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-300 text-gray-800 text-sm font-bold">
                   {entry.position}
                 </div>
                 <div>
-                  <div className="font-semibold text-white text-sm">{entry.driver}</div>
-                  <div className="text-xs text-gray-400">{entry.team}</div>
+                  <div className="font-semibold text-gray-900 text-sm">{entry.driver}</div>
+                  <div className="text-xs text-gray-600">{entry.team}</div>
                 </div>
               </div>
             </div>
