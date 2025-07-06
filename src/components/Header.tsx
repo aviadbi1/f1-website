@@ -31,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection }) => {
           <div className="md:hidden">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="p-2 text-gray-300 hover:text-white focus:outline-none"
+              className="p-2 text-gray-600 hover:text-gray-900 focus:outline-none"
             >
               {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
