@@ -37,8 +37,8 @@ const Hero: React.FC = () => {
               FORMULA 1
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
-              Experience the ultimate racing championship with real-time standings, 
+            <p className="text-xl md:text-2xl text-gray-800 mb-12 max-w-3xl mx-auto">
+              Experience the ultimate racing championship with real-time standings,
               live race tracking, and immersive F1 coverage.
             </p>
             
@@ -78,8 +78,8 @@ const Hero: React.FC = () => {
             FORMULA 1
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
-            Experience the ultimate racing championship with real-time standings, 
+          <p className="text-xl md:text-2xl text-gray-800 mb-12 max-w-3xl mx-auto">
+            Experience the ultimate racing championship with real-time standings,
             live race tracking, and immersive F1 coverage.
           </p>
           
