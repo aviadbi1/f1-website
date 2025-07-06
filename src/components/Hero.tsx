@@ -19,7 +19,7 @@ const Hero: React.FC = () => {
     return (
       <section className="relative pt-20 pb-16 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 via-transparent to-blue-500/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#008250]/20 via-transparent to-[#116dff]/20"></div>
           <div className="racing-lines"></div>
         </div>
         
@@ -27,23 +27,23 @@ const Hero: React.FC = () => {
           <div className="text-center py-20">
             <div className="inline-block mb-6">
               <div className="flex items-center justify-center space-x-3 mb-4">
-                <Flag className="w-12 h-12 text-red-500 animate-bounce" />
-                <div className="h-12 w-1 bg-gradient-to-b from-red-500 to-transparent"></div>
-                <Flag className="w-12 h-12 text-blue-500 animate-bounce delay-200" />
+                <Flag className="w-12 h-12 text-[#008250] animate-bounce" />
+                <div className="h-12 w-1 bg-gradient-to-b from-[#008250] to-transparent"></div>
+                <Flag className="w-12 h-12 text-[#116dff] animate-bounce delay-200" />
               </div>
             </div>
             
-            <h1 className="text-6xl md:text-8xl font-black mb-6 bg-gradient-to-r from-red-500 via-white to-blue-500 bg-clip-text text-transparent animate-gradient">
+            <h1 className="text-6xl md:text-8xl font-black mb-6 bg-gradient-to-r from-[#008250] via-[#116dff] to-[#008250] bg-clip-text text-transparent animate-gradient">
               FORMULA 1
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
-              Experience the ultimate racing championship with real-time standings, 
+            <p className="text-xl md:text-2xl text-gray-800 mb-12 max-w-3xl mx-auto">
+              Experience the ultimate racing championship with real-time standings,
               live race tracking, and immersive F1 coverage.
             </p>
             
-            <div className="max-w-2xl mx-auto bg-black/40 backdrop-blur-lg rounded-2xl p-8 border border-gray-500/30">
-              <h3 className="text-2xl font-bold text-white mb-4">2025 Season Underway</h3>
+            <div className="max-w-2xl mx-auto bg-white/70 backdrop-blur-lg rounded-2xl p-8 border border-[#008250]/30">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">2025 Season Underway</h3>
               <p className="text-gray-300">Follow the championship battle as it unfolds!</p>
             </div>
           </div>
@@ -60,7 +60,7 @@ const Hero: React.FC = () => {
   return (
     <section className="relative pt-20 pb-16 overflow-hidden">
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 via-transparent to-blue-500/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#008250]/20 via-transparent to-[#116dff]/20"></div>
         <div className="racing-lines"></div>
       </div>
       
@@ -68,41 +68,41 @@ const Hero: React.FC = () => {
         <div className="text-center py-20">
           <div className="inline-block mb-6">
             <div className="flex items-center justify-center space-x-3 mb-4">
-              <Flag className="w-12 h-12 text-red-500 animate-bounce" />
-              <div className="h-12 w-1 bg-gradient-to-b from-red-500 to-transparent"></div>
-              <Flag className="w-12 h-12 text-blue-500 animate-bounce delay-200" />
+              <Flag className="w-12 h-12 text-[#008250] animate-bounce" />
+              <div className="h-12 w-1 bg-gradient-to-b from-[#008250] to-transparent"></div>
+              <Flag className="w-12 h-12 text-[#116dff] animate-bounce delay-200" />
             </div>
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-black mb-6 bg-gradient-to-r from-red-500 via-white to-blue-500 bg-clip-text text-transparent animate-gradient">
+          <h1 className="text-6xl md:text-8xl font-black mb-6 bg-gradient-to-r from-[#008250] via-[#116dff] to-[#008250] bg-clip-text text-transparent animate-gradient">
             FORMULA 1
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
-            Experience the ultimate racing championship with real-time standings, 
+          <p className="text-xl md:text-2xl text-gray-800 mb-12 max-w-3xl mx-auto">
+            Experience the ultimate racing championship with real-time standings,
             live race tracking, and immersive F1 coverage.
           </p>
           
-          <div className="max-w-2xl mx-auto bg-black/40 backdrop-blur-lg rounded-2xl p-8 border border-red-500/30">
+          <div className="max-w-2xl mx-auto bg-white/70 backdrop-blur-lg rounded-2xl p-8 border border-[#008250]/30">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <Timer className="w-6 h-6 text-red-500" />
+              <Timer className="w-6 h-6 text-[#008250]" />
               <h3 className="text-2xl font-bold text-red-400">NEXT RACE</h3>
             </div>
             
-            <h4 className="text-xl font-semibold mb-6 text-white">{nextRace.name}</h4>
+            <h4 className="text-xl font-semibold mb-6 text-gray-900">{nextRace.name}</h4>
             
             <div className="grid grid-cols-3 gap-4">
-              <div className="bg-red-500/20 rounded-lg p-4 border border-red-500/30">
-                <div className="text-3xl font-bold text-red-400">{daysUntil}</div>
-                <div className="text-sm text-gray-300">DAYS</div>
+              <div className="bg-[#008250]/20 rounded-lg p-4 border border-[#008250]/30">
+                <div className="text-3xl font-bold text-[#008250]">{daysUntil}</div>
+                <div className="text-sm text-gray-600">DAYS</div>
               </div>
-              <div className="bg-blue-500/20 rounded-lg p-4 border border-blue-500/30">
-                <div className="text-3xl font-bold text-blue-400">{hoursUntil}</div>
-                <div className="text-sm text-gray-300">HOURS</div>
+              <div className="bg-[#116dff]/20 rounded-lg p-4 border border-[#116dff]/30">
+                <div className="text-3xl font-bold text-[#116dff]">{hoursUntil}</div>
+                <div className="text-sm text-gray-600">HOURS</div>
               </div>
               <div className="bg-cyan-500/20 rounded-lg p-4 border border-cyan-500/30">
-                <div className="text-3xl font-bold text-cyan-400">{minutesUntil}</div>
-                <div className="text-sm text-gray-300">MINUTES</div>
+                <div className="text-3xl font-bold text-cyan-600">{minutesUntil}</div>
+                <div className="text-sm text-gray-600">MINUTES</div>
               </div>
             </div>
           </div>

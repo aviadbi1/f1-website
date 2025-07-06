@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Users, Trophy } from 'lucide-react';
+import { Users, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { fetchConstructorStandings, ConstructorStanding } from '../api/ergast';
 
 const ConstructorsStandings: React.FC = () => {
+  const [sortBy, setSortBy] = useState<'points' | 'wins' | 'podiums'>('points');
   const [constructors, setConstructors] = useState<ConstructorStanding[]>([]);
 
   useEffect(() => {
@@ -17,113 +18,106 @@ const ConstructorsStandings: React.FC = () => {
     fetchData();
   }, []);
 
+  const sortedConstructors = [...constructors].sort((a, b) => {
+    switch (sortBy) {
+      case 'wins':
+        return b.wins - a.wins;
+      case 'podiums':
+        return b.podiums - a.podiums;
+      default:
+        return b.points - a.points;
+    }
+  });
+
+  const getPositionChange = (constructor: ConstructorStanding) => {
+    const change = constructor.previousPosition - constructor.position;
+    if (change > 0) return { icon: TrendingUp, color: 'text-green-400', value: `+${change}` };
+    if (change < 0) return { icon: TrendingDown, color: 'text-red-400', value: change };
+    return { icon: Minus, color: 'text-gray-400', value: '0' };
+  };
+
   return (
-    <section className="py-16 bg-gray-900/50">
+    <section className="py-16 relative">
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center space-x-3 mb-4">
-            <Users className="w-8 h-8 text-blue-500" />
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
+            <Users className="w-8 h-8 text-[#116dff]" />
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-[#116dff] to-[#008250] bg-clip-text text-transparent">
               CONSTRUCTORS CHAMPIONSHIP
             </h2>
           </div>
+
+          <div className="flex justify-center space-x-4 mt-8">
+            {[
+              { key: 'points', label: 'Points' },
+              { key: 'wins', label: 'Wins' },
+              { key: 'podiums', label: 'Podiums' }
+            ].map(({ key, label }) => (
+              <button
+                key={key}
+                onClick={() => setSortBy(key as 'points' | 'wins' | 'podiums')}
+                className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 ${
+                  sortBy === key
+                    ? 'bg-[#008250]/20 border border-[#008250]/50 text-[#008250]'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-6">
-          {constructors.map((constructor, index) => (
-            <div
-              key={constructor.id}
-              className="group bg-black/40 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:scale-[1.02]"
-            >
-              <div className="flex items-center space-x-6">
-                <div className="relative">
-                  <div
-                    className={`w-16 h-16 rounded-lg flex items-center justify-center text-2xl font-bold ${
-                      index === 0 ? 'bg-yellow-500 text-black' :
-                      index === 1 ? 'bg-gray-300 text-black' :
-                      index === 2 ? 'bg-orange-600 text-white' :
-                      'bg-gray-700 text-white'
-                    }`}
-                  >
-                    {index + 1}
-                  </div>
-                  {index < 3 && (
-                    <div className="absolute -top-1 -right-1">
-                      <Trophy className="w-6 h-6 text-yellow-500" />
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex-1">
-                  <div className="flex items-center space-x-3 mb-3">
-                    <div className="w-12 h-8 rounded overflow-hidden border border-gray-600">
-                      <img
-                        src={constructor.logo}
-                        alt={constructor.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-white">{constructor.name}</h3>
-                      <p className="text-sm text-gray-400">{constructor.country}</p>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-4 mb-4">
-                    <div>
-                      <span className="text-gray-400 text-sm">Points</span>
-                      <div className="text-2xl font-bold text-white">{constructor.points}</div>
-                    </div>
-                    <div>
-                      <span className="text-gray-400 text-sm">Wins</span>
-                      <div className="text-xl font-semibold text-green-400">{constructor.wins}</div>
-                    </div>
-                    <div>
-                      <span className="text-gray-400 text-sm">Podiums</span>
-                      <div className="text-xl font-semibold text-yellow-400">{constructor.podiums}</div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h4 className="text-sm font-semibold text-gray-300">Drivers</h4>
-                    <div className="flex space-x-2">
-                      {constructor.drivers.map((driver, driverIndex) => (
-                        <div
-                          key={driverIndex}
-                          className="flex items-center space-x-2 bg-gray-800/50 rounded-lg px-3 py-1"
-                        >
-                          {constructor.logo && (
-                            <img
-                              src={constructor.logo}
-                              alt={constructor.name}
-                              className="w-6 h-6 rounded-full border border-gray-600 object-contain"
-                            />
+        <div className="overflow-x-auto rounded-xl shadow">
+          <table className="min-w-full divide-y divide-gray-200 bg-white/80 backdrop-blur-lg">
+            <thead className="bg-[#F8EEE1] text-xs font-semibold text-gray-600">
+              <tr>
+                <th scope="col" className="px-4 py-3 text-left">Pos</th>
+                <th scope="col" className="px-4 py-3 text-left">Team</th>
+                <th scope="col" className="px-4 py-3 text-right">Pts</th>
+                <th scope="col" className="px-4 py-3 text-right">Wins</th>
+                <th scope="col" className="px-4 py-3 text-right">Podiums</th>
+                <th scope="col" className="px-4 py-3 text-right">Δ</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 text-sm text-gray-900">
+              {sortedConstructors.map((constructor, index) => {
+                const change = getPositionChange(constructor);
+                const ChangeIcon = change.icon;
+                return (
+                  <tr key={constructor.id} className="hover:bg-gray-100 transition-colors">
+                    <td className="px-4 py-3 font-semibold">{index + 1}</td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 rounded-md overflow-hidden border border-gray-300 bg-gray-100 flex items-center justify-center">
+                          {constructor.logo ? (
+                            <img src={constructor.logo} alt={constructor.name} className="w-full h-full object-contain" />
+                          ) : (
+                            <div className="text-sm font-bold text-gray-400">
+                              {constructor.name
+                                .split(' ')
+                                .map((n) => n[0])
+                                .join('')}
+                            </div>
                           )}
-                          <span className="text-sm font-medium text-white">{driver.name}</span>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="mt-4">
-                    <div className="flex justify-between text-xs text-gray-400 mb-1">
-                      <span>Championship Progress</span>
-                      <span>{((constructor.points / constructors[0].points) * 100).toFixed(1)}%</span>
-                    </div>
-                    <div className="w-full bg-gray-800 rounded-full h-2">
-                      <div
-                        className="h-2 rounded-full transition-all duration-1000"
-                        style={{
-                          width: `${(constructor.points / constructors[0].points) * 100}%`,
-                          background: `linear-gradient(90deg, ${constructor.color}, ${constructor.color}80)`
-                        }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+                        <span className="font-medium">{constructor.name}</span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-right font-semibold">{constructor.points}</td>
+                    <td className="px-4 py-3 text-right">{constructor.wins}</td>
+                    <td className="px-4 py-3 text-right">{constructor.podiums}</td>
+                    <td className="px-4 py-3 text-right">
+                      <div className="flex items-center justify-end space-x-1">
+                        <ChangeIcon className={`w-4 h-4 ${change.color}`} />
+                        <span className={`${change.color}`}>{change.value}</span>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
