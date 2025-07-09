@@ -13,8 +13,11 @@ const NewsFeed: React.FC = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
+        const rssUrl = encodeURIComponent(
+          'https://feeds.bbci.co.uk/sport/formula1/rss.xml'
+        );
         const res = await fetch(
-          'https://api.allorigins.win/raw?url=https://feeds.bbci.co.uk/sport/formula1/rss.xml'
+          `https://api.allorigins.win/raw?url=${rssUrl}`
         );
         const text = await res.text();
         const parser = new DOMParser();
