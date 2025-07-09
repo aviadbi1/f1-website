@@ -39,6 +39,36 @@ export interface ConstructorStanding {
   drivers?: { name: string }[];
 }
 
+export interface PodiumCounts {
+  drivers: Record<string, number>;
+  constructors: Record<string, number>;
+}
+
+export async function fetchPodiumCounts(year: number): Promise<PodiumCounts> {
+  const res = await fetch(`${ERGAST_BASE_URL}/${year}/results.json?limit=1000`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch Ergast results');
+  }
+  const json = await res.json();
+  const races = json?.MRData?.RaceTable?.Races || [];
+  const driverCounts: Record<string, number> = {};
+  const constructorCounts: Record<string, number> = {};
+  for (const race of races) {
+    for (const result of race.Results || []) {
+      const pos = Number(result.position);
+      if (pos <= 3) {
+        const driver = `${result.Driver.givenName} ${result.Driver.familyName}`;
+        driverCounts[driver] = (driverCounts[driver] || 0) + 1;
+        const team = result.Constructor?.name || '';
+        if (team) {
+          constructorCounts[team] = (constructorCounts[team] || 0) + 1;
+        }
+      }
+    }
+  }
+  return { drivers: driverCounts, constructors: constructorCounts };
+}
+
 const COUNTRY_CODE_MAP: Record<string, string> = {
   Bahrain: 'BH',
   'Saudi Arabia': 'SA',
@@ -269,6 +299,12 @@ export async function fetchDriverStandings(year: number): Promise<DriverStanding
   }
   const json = await res.json();
   const standings: ErgastDriverStanding[] = json?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings || [];
+  let podiumCounts: PodiumCounts | undefined;
+  try {
+    podiumCounts = await fetchPodiumCounts(year);
+  } catch (err) {
+    console.error('Failed to fetch podium counts', err);
+  }
   return standings.map((d, idx) => {
     const teamName = d.Constructors?.[0]?.name || '';
     const fullName = `${d.Driver.givenName} ${d.Driver.familyName}`;
@@ -284,7 +320,10 @@ export async function fetchDriverStandings(year: number): Promise<DriverStanding
           .replace(/[\u0300-\u036f]/g, '')],
       points: Number(d.points),
       wins: Number(d.wins),
-      podiums: Number(d.podiums ?? 0),
+      podiums:
+        podiumCounts?.drivers[fullName] !== undefined
+          ? podiumCounts.drivers[fullName]
+          : Number(d.podiums ?? 0),
       position: Number(d.position),
       previousPosition: Number(d.position),
       teamColor: TEAM_COLOR_MAP[teamName] || '#666'
@@ -299,6 +338,12 @@ export async function fetchConstructorStandings(year: number): Promise<Construct
   }
   const json = await res.json();
   const standings: ErgastConstructorStanding[] = json?.MRData?.StandingsTable?.StandingsLists?.[0]?.ConstructorStandings || [];
+  let podiumCounts: PodiumCounts | undefined;
+  try {
+    podiumCounts = await fetchPodiumCounts(year);
+  } catch (err) {
+    console.error('Failed to fetch podium counts', err);
+  }
   return standings.map((c, idx) => {
     const name = c.Constructor?.name || '';
     return {
@@ -307,7 +352,10 @@ export async function fetchConstructorStandings(year: number): Promise<Construct
       country: c.Constructor?.nationality || '',
       points: Number(c.points),
       wins: Number(c.wins),
-      podiums: Number(c.podiums ?? 0),
+      podiums:
+        podiumCounts?.constructors[name] !== undefined
+          ? podiumCounts.constructors[name]
+          : Number(c.podiums ?? 0),
       position: Number(c.position),
       previousPosition: Number(c.position),
       color: TEAM_COLOR_MAP[name] || '#666',
