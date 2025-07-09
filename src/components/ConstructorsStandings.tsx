@@ -3,7 +3,7 @@ import { Users, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { fetchConstructorStandings, ConstructorStanding } from '../api/ergast';
 
 const ConstructorsStandings: React.FC = () => {
-  const [sortBy, setSortBy] = useState<'points' | 'wins' | 'podiums'>('points');
+  const [sortBy, setSortBy] = useState<'points' | 'wins'>('points');
   const [constructors, setConstructors] = useState<ConstructorStanding[]>([]);
 
   useEffect(() => {
@@ -22,8 +22,6 @@ const ConstructorsStandings: React.FC = () => {
     switch (sortBy) {
       case 'wins':
         return b.wins - a.wins;
-      case 'podiums':
-        return b.podiums - a.podiums;
       default:
         return b.points - a.points;
     }
@@ -51,11 +49,10 @@ const ConstructorsStandings: React.FC = () => {
             {[
               { key: 'points', label: 'Points' },
               { key: 'wins', label: 'Wins' },
-              { key: 'podiums', label: 'Podiums' }
             ].map(({ key, label }) => (
               <button
                 key={key}
-                onClick={() => setSortBy(key as 'points' | 'wins' | 'podiums')}
+                onClick={() => setSortBy(key as 'points' | 'wins')}
                 className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 ${
                   sortBy === key
                     ? 'bg-[#008250]/20 border border-[#008250]/50 text-[#008250]'
@@ -76,7 +73,6 @@ const ConstructorsStandings: React.FC = () => {
                 <th scope="col" className="px-4 py-3 text-left">Team</th>
                 <th scope="col" className="px-4 py-3 text-right">Pts</th>
                 <th scope="col" className="px-4 py-3 text-right">Wins</th>
-                <th scope="col" className="px-4 py-3 text-right">Podiums</th>
                 <th scope="col" className="px-4 py-3 text-right">Δ</th>
               </tr>
             </thead>
@@ -106,7 +102,6 @@ const ConstructorsStandings: React.FC = () => {
                     </td>
                     <td className="px-4 py-3 text-right font-semibold">{constructor.points}</td>
                     <td className="px-4 py-3 text-right">{constructor.wins}</td>
-                    <td className="px-4 py-3 text-right">{constructor.podiums}</td>
                     <td className="px-4 py-3 text-right">
                       <div className="flex items-center justify-end space-x-1">
                         <ChangeIcon className={`w-4 h-4 ${change.color}`} />
@@ -123,5 +118,4 @@ const ConstructorsStandings: React.FC = () => {
     </section>
   );
 };
-
 export default ConstructorsStandings;

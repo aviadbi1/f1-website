@@ -3,7 +3,7 @@ import { Trophy, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { fetchDriverStandings, DriverStanding } from '../api/ergast';
 
 const DriversStandings: React.FC = () => {
-  const [sortBy, setSortBy] = useState<'points' | 'wins' | 'podiums'>('points');
+  const [sortBy, setSortBy] = useState<'points' | 'wins'>('points');
   const [drivers, setDrivers] = useState<DriverStanding[]>([]);
 
   useEffect(() => {
@@ -22,8 +22,6 @@ const DriversStandings: React.FC = () => {
     switch (sortBy) {
       case 'wins':
         return b.wins - a.wins;
-      case 'podiums':
-        return b.podiums - a.podiums;
       default:
         return b.points - a.points;
     }
@@ -51,11 +49,10 @@ const DriversStandings: React.FC = () => {
             {[
               { key: 'points', label: 'Points' },
               { key: 'wins', label: 'Wins' },
-              { key: 'podiums', label: 'Podiums' }
             ].map(({ key, label }) => (
               <button
                 key={key}
-                onClick={() => setSortBy(key as 'points' | 'wins' | 'podiums')}
+                onClick={() => setSortBy(key as 'points' | 'wins')}
                 className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 ${
                   sortBy === key
                     ? 'bg-[#008250]/20 border border-[#008250]/50 text-[#008250]'
@@ -77,7 +74,6 @@ const DriversStandings: React.FC = () => {
                 <th scope="col" className="px-4 py-3 text-left">Team</th>
                 <th scope="col" className="px-4 py-3 text-right">Pts</th>
                 <th scope="col" className="px-4 py-3 text-right">Wins</th>
-                <th scope="col" className="px-4 py-3 text-right">Podiums</th>
                 <th scope="col" className="px-4 py-3 text-right">Δ</th>
               </tr>
             </thead>
@@ -112,7 +108,6 @@ const DriversStandings: React.FC = () => {
                     </td>
                     <td className="px-4 py-3 text-right font-semibold">{driver.points}</td>
                     <td className="px-4 py-3 text-right">{driver.wins}</td>
-                    <td className="px-4 py-3 text-right">{driver.podiums}</td>
                     <td className="px-4 py-3 text-right">
                       <div className="flex items-center justify-end space-x-1">
                         <ChangeIcon className={`w-4 h-4 ${change.color}`} />
@@ -129,5 +124,4 @@ const DriversStandings: React.FC = () => {
     </section>
   );
 };
-
 export default DriversStandings;

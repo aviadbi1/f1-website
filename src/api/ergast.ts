@@ -39,6 +39,38 @@ export interface ConstructorStanding {
   drivers?: { name: string }[];
 }
 
+export interface PodiumCounts {
+  driverIds: Record<string, number>;
+  constructorIds: Record<string, number>;
+}
+
+export async function fetchPodiumCounts(year: number): Promise<PodiumCounts> {
+  const res = await fetch(`${ERGAST_BASE_URL}/${year}/results.json?limit=1000`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch Ergast results');
+  }
+  const json = await res.json();
+  const races = json?.MRData?.RaceTable?.Races || [];
+  const driverCounts: Record<string, number> = {};
+  const constructorCounts: Record<string, number> = {};
+  for (const race of races) {
+    for (const result of race.Results || []) {
+      const pos = Number(result.position);
+      if (pos <= 3) {
+        const driverId = result.Driver?.driverId;
+        if (driverId) {
+          driverCounts[driverId] = (driverCounts[driverId] || 0) + 1;
+        }
+        const constructorId = result.Constructor?.constructorId;
+        if (constructorId) {
+          constructorCounts[constructorId] = (constructorCounts[constructorId] || 0) + 1;
+        }
+      }
+    }
+  }
+  return { driverIds: driverCounts, constructorIds: constructorCounts };
+}
+
 const COUNTRY_CODE_MAP: Record<string, string> = {
   Bahrain: 'BH',
   'Saudi Arabia': 'SA',
@@ -224,8 +256,8 @@ interface ErgastDriverStanding {
   position: string;
   points: string;
   wins: string;
-  Driver: { givenName: string; familyName: string };
-  Constructors: { name: string }[];
+  Driver: { driverId: string; givenName: string; familyName: string };
+  Constructors: { constructorId: string; name: string }[];
   podiums?: string;
 }
 
@@ -233,7 +265,7 @@ interface ErgastConstructorStanding {
   position: string;
   points: string;
   wins: string;
-  Constructor: { name: string; nationality?: string };
+  Constructor: { constructorId: string; name: string; nationality?: string };
   podiums?: string;
 }
 
@@ -269,9 +301,16 @@ export async function fetchDriverStandings(year: number): Promise<DriverStanding
   }
   const json = await res.json();
   const standings: ErgastDriverStanding[] = json?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings || [];
+  let podiumCounts: PodiumCounts | undefined;
+  try {
+    podiumCounts = await fetchPodiumCounts(year);
+  } catch (err) {
+    console.error('Failed to fetch podium counts', err);
+  }
   return standings.map((d, idx) => {
     const teamName = d.Constructors?.[0]?.name || '';
     const fullName = `${d.Driver.givenName} ${d.Driver.familyName}`;
+    const driverId = d.Driver.driverId;
     return {
       id: idx + 1,
       name: fullName,
@@ -284,7 +323,10 @@ export async function fetchDriverStandings(year: number): Promise<DriverStanding
           .replace(/[\u0300-\u036f]/g, '')],
       points: Number(d.points),
       wins: Number(d.wins),
-      podiums: Number(d.podiums ?? 0),
+      podiums: Math.max(
+        podiumCounts?.driverIds[driverId] ?? Number(d.podiums ?? 0),
+        Number(d.wins)
+      ),
       position: Number(d.position),
       previousPosition: Number(d.position),
       teamColor: TEAM_COLOR_MAP[teamName] || '#666'
@@ -299,15 +341,25 @@ export async function fetchConstructorStandings(year: number): Promise<Construct
   }
   const json = await res.json();
   const standings: ErgastConstructorStanding[] = json?.MRData?.StandingsTable?.StandingsLists?.[0]?.ConstructorStandings || [];
+  let podiumCounts: PodiumCounts | undefined;
+  try {
+    podiumCounts = await fetchPodiumCounts(year);
+  } catch (err) {
+    console.error('Failed to fetch podium counts', err);
+  }
   return standings.map((c, idx) => {
     const name = c.Constructor?.name || '';
+    const constructorId = c.Constructor.constructorId;
     return {
       id: idx + 1,
       name,
       country: c.Constructor?.nationality || '',
       points: Number(c.points),
       wins: Number(c.wins),
-      podiums: Number(c.podiums ?? 0),
+      podiums: Math.max(
+        podiumCounts?.constructorIds[constructorId] ?? Number(c.podiums ?? 0),
+        Number(c.wins)
+      ),
       position: Number(c.position),
       previousPosition: Number(c.position),
       color: TEAM_COLOR_MAP[name] || '#666',

@@ -5,6 +5,7 @@ import DriversStandings from './components/DriversStandings';
 import ConstructorsStandings from './components/ConstructorsStandings';
 import RaceSchedule from './components/RaceSchedule';
 import LiveTracker from './components/LiveTracker';
+import NewsFeed from './components/NewsFeed';
 import './styles/animations.css';
 
 function App() {
@@ -34,6 +35,12 @@ function App() {
             <LiveTracker />
           </div>
         )}
+
+        {activeSection === 'news' && (
+          <div className="fade-in">
+            <NewsFeed />
+          </div>
+        )}
       </main>
       
       <div className="fixed inset-0 pointer-events-none z-0">
@@ -44,5 +51,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
