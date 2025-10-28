@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Zap, Trophy, Calendar, Radio, Menu, X, Newspaper } from 'lucide-react';
+import { Zap, Trophy, Calendar, Radio, Menu, X, Newspaper, Flower2 } from 'lucide-react';
 
 interface HeaderProps {
   activeSection: string;
@@ -12,6 +12,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection }) => {
     { id: 'schedule', label: 'Race Calendar', icon: Calendar },
     { id: 'live', label: 'Live Tracker', icon: Radio },
     { id: 'news', label: 'News', icon: Newspaper },
+    { id: 'qr', label: 'Artistic QR', icon: Flower2 },
   ];
 
   const [menuOpen, setMenuOpen] = useState(false);

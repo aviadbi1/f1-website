@@ -6,6 +6,7 @@ import ConstructorsStandings from './components/ConstructorsStandings';
 import RaceSchedule from './components/RaceSchedule';
 import LiveTracker from './components/LiveTracker';
 import NewsFeed from './components/NewsFeed';
+import ArtisticQrGenerator from './components/ArtisticQrGenerator';
 import './styles/animations.css';
 
 function App() {
@@ -39,6 +40,12 @@ function App() {
         {activeSection === 'news' && (
           <div className="fade-in">
             <NewsFeed />
+          </div>
+        )}
+
+        {activeSection === 'qr' && (
+          <div className="fade-in">
+            <ArtisticQrGenerator />
           </div>
         )}
       </main>
