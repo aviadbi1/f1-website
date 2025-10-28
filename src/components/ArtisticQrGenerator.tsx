@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Download, Flower2, RefreshCw, Sparkles } from 'lucide-react';
 import QRCodeStyling from 'qr-code-styling';
-import { drawFlowerField } from '../utils/qrArt';
+import { drawPromptedArt } from '../utils/qrArt';
 
 const QR_SIZE = 320;
 const palettePresets = [
@@ -14,19 +14,55 @@ const defaultData = 'https://www.formula1.com/';
 
 type QRCodeInstance = InstanceType<typeof QRCodeStyling>;
 
+const promptPresets = [
+  'floral garden at sunrise with soft light',
+  'ocean waves at twilight with glowing jellyfish',
+  'galactic nebula with shimmering stardust',
+  'desert sunset with sweeping dunes',
+  'neon cyberpunk skyline with electric hues',
+];
+
 const ArtisticQrGenerator: React.FC = () => {
   const [data, setData] = useState(defaultData);
   const [accentColor, setAccentColor] = useState('#0f766e');
   const [selectedPalette, setSelectedPalette] = useState(0);
-  const [bloomDensity, setBloomDensity] = useState(20);
+  const [detailLevel, setDetailLevel] = useState(20);
+  const [prompt, setPrompt] = useState(promptPresets[0]);
   const qrContainerRef = useRef<HTMLDivElement | null>(null);
   const overlayCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const qrCodeRef = useRef<QRCodeInstance | null>(null);
 
+  const promptPalette = useMemo(() => {
+    const normalized = prompt?.toLowerCase() ?? '';
+    if (!normalized.trim()) {
+      return null;
+    }
+
+    if (/space|galaxy|star|nebula|cosmic/.test(normalized)) {
+      return ['#0F172A', '#1E3A8A', '#4338CA', accentColor ?? '#F472B6'];
+    }
+    if (/ocean|sea|wave|coral|underwater/.test(normalized)) {
+      return ['#0EA5E9', '#38BDF8', '#22D3EE', accentColor ?? '#14B8A6'];
+    }
+    if (/desert|dune|sunset|canyon|sand/.test(normalized)) {
+      return ['#FDBA74', '#FB923C', '#F97316', accentColor ?? '#FACC15'];
+    }
+    if (/forest|jungle|grove|leaves|moss|woodland/.test(normalized)) {
+      return ['#DCFCE7', '#86EFAC', '#4ADE80', accentColor ?? '#166534'];
+    }
+    if (/tech|neon|cyber|futur|circuit|synth/.test(normalized)) {
+      return ['#0F172A', '#111827', accentColor ?? '#22D3EE', '#F472B6'];
+    }
+    return null;
+  }, [accentColor, prompt]);
+
   const palette = useMemo(() => {
+    if (promptPalette) {
+      return promptPalette;
+    }
     const chosen = palettePresets[selectedPalette] ?? palettePresets[0];
     return accentColor ? [...chosen.slice(0, chosen.length - 1), accentColor] : chosen;
-  }, [accentColor, selectedPalette]);
+  }, [accentColor, promptPalette, selectedPalette]);
 
   useEffect(() => {
     if (!qrContainerRef.current || qrCodeRef.current) {
@@ -99,14 +135,16 @@ const ArtisticQrGenerator: React.FC = () => {
       return;
     }
 
-    drawFlowerField(canvas, {
+    drawPromptedArt(canvas, {
       width: QR_SIZE,
       height: QR_SIZE,
-      bloomCount: bloomDensity,
+      bloomCount: detailLevel,
+      detailLevel,
       palette,
       accentColor,
+      prompt,
     });
-  }, [accentColor, bloomDensity, palette]);
+  }, [accentColor, detailLevel, palette, prompt]);
 
   const randomizePalette = () => {
     setSelectedPalette((current) => (current + 1) % palettePresets.length);
@@ -125,10 +163,10 @@ const ArtisticQrGenerator: React.FC = () => {
             <span>Creative tools</span>
           </span>
           <h2 className="text-4xl font-bold text-gray-900 leading-tight">
-            Grow a <span className="text-[#008250]">field of flowers</span> around your QR code.
+            Describe the mood and watch your QR code <span className="text-[#008250]">adapt in real time</span>.
           </h2>
           <p className="text-lg text-gray-600 max-w-xl">
-            Share event passes, fan club links, or exclusive content with a lush botanical motif that keeps the QR code scannable while matching the vibrant Formula 1 identity.
+            Share event passes, fan club links, or exclusive content with bespoke scenery—lush gardens, cosmic clouds, neon grids, and more—all generated from your creative prompt without sacrificing scan reliability.
           </p>
 
           <div className="space-y-4">
@@ -141,10 +179,40 @@ const ArtisticQrGenerator: React.FC = () => {
             />
           </div>
 
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wide">Visual prompt</label>
+              <span className="text-xs text-gray-500">Describe the vibe you want</span>
+            </div>
+            <textarea
+              value={prompt}
+              onChange={(event) => setPrompt(event.target.value)}
+              rows={3}
+              placeholder="e.g. neon city skyline with glowing lights"
+              className="w-full rounded-xl border border-gray-200 bg-white/90 px-4 py-3 text-base shadow-sm focus:border-[#008250] focus:outline-none focus:ring-2 focus:ring-[#008250]/40"
+            />
+            <div className="flex flex-wrap gap-2 text-xs">
+              {promptPresets.map((preset) => (
+                <button
+                  key={preset}
+                  type="button"
+                  onClick={() => setPrompt(preset)}
+                  className={`rounded-full px-3 py-1 font-medium transition ${
+                    prompt === preset
+                      ? 'bg-[#008250] text-white shadow-sm'
+                      : 'bg-[#008250]/10 text-[#008250] hover:bg-[#008250]/20'
+                  }`}
+                >
+                  {preset}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="space-y-2">
               <label className="flex items-center justify-between text-sm font-semibold text-gray-700 uppercase tracking-wide">
-                Accent bloom color
+                Accent color
                 <Sparkles className="h-4 w-4 text-[#008250]" />
               </label>
               <input
@@ -156,18 +224,18 @@ const ArtisticQrGenerator: React.FC = () => {
             </div>
             <div className="space-y-2">
               <label className="flex items-center justify-between text-sm font-semibold text-gray-700 uppercase tracking-wide">
-                Bloom density
+                Detail density
                 <RefreshCw className="h-4 w-4 text-[#008250]" />
               </label>
               <input
                 type="range"
                 min={8}
                 max={36}
-                value={bloomDensity}
-                onChange={(event) => setBloomDensity(Number(event.target.value))}
+                value={detailLevel}
+                onChange={(event) => setDetailLevel(Number(event.target.value))}
                 className="w-full accent-[#008250]"
               />
-              <p className="text-xs text-gray-500">{bloomDensity} flowers</p>
+              <p className="text-xs text-gray-500">{detailLevel} layers of detail</p>
             </div>
           </div>
 
