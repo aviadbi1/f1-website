@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Trophy, Calendar, Menu, X, Flower2 } from 'lucide-react';
-import logo from '../assets/f1-logo.svg';
+import logo from '../f1-logo.png';
 
 interface HeaderProps {
   activeSection: string;
