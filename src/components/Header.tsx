@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Zap, Trophy, Calendar, Radio, Menu, X, Newspaper, Flower2 } from 'lucide-react';
+import { Trophy, Calendar, Menu, X, Flower2 } from 'lucide-react';
+import logo from '../f1-logo.png';
 
 interface HeaderProps {
   activeSection: string;
@@ -10,8 +11,6 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection }) => {
   const navItems = [
     { id: 'standings', label: 'Championships', icon: Trophy },
     { id: 'schedule', label: 'Race Calendar', icon: Calendar },
-    { id: 'live', label: 'Live Tracker', icon: Radio },
-    { id: 'news', label: 'News', icon: Newspaper },
     { id: 'qr', label: 'Artistic QR', icon: Flower2 },
   ];
 
@@ -22,13 +21,12 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection }) => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="relative">
-              <Zap className="w-8 h-8 text-[#008250] animate-pulse" />
-              <div className="absolute inset-0 w-8 h-8 bg-[#008250] blur-md opacity-50 animate-pulse"></div>
-            </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-[#008250] via-[#116dff] to-[#008250] bg-clip-text text-transparent">
-              F1 NEXUS
-            </h1>
+            <img
+              src={logo}
+              alt="F1 Nexus logo"
+              className="w-16 h-16 object-contain drop-shadow-md"
+            />
+            <span className="sr-only">F1 Nexus</span>
           </div>
           <div className="md:hidden">
             <button

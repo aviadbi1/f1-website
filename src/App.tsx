@@ -4,8 +4,6 @@ import Hero from './components/Hero';
 import DriversStandings from './components/DriversStandings';
 import ConstructorsStandings from './components/ConstructorsStandings';
 import RaceSchedule from './components/RaceSchedule';
-import LiveTracker from './components/LiveTracker';
-import NewsFeed from './components/NewsFeed';
 import ArtisticQrGenerator from './components/ArtisticQrGenerator';
 import './styles/animations.css';
 
@@ -31,18 +29,6 @@ function App() {
           </div>
         )}
         
-        {activeSection === 'live' && (
-          <div className="fade-in">
-            <LiveTracker />
-          </div>
-        )}
-
-        {activeSection === 'news' && (
-          <div className="fade-in">
-            <NewsFeed />
-          </div>
-        )}
-
         {activeSection === 'qr' && (
           <div className="fade-in">
             <ArtisticQrGenerator />
